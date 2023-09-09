@@ -24,6 +24,7 @@ class AuthenticationController extends Controller
         $request->validated($request->all());
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
+
             return $this->error(null , 'obbs , we are not able to lof you in , you password or email is wrong' , 422);
         }
 

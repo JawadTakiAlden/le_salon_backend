@@ -8,3 +8,4 @@ class OrderStates
     public const RUNNER_ORDER = 2;
     public const CASHER_ORDER = 3;
 }
+

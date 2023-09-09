@@ -28,6 +28,12 @@ class MealController extends Controller
         return MealResource::collection($meals);
     }
 
+    public function topMeals () {
+        $meals = Meal::limit(2)->get();
+
+        return MealResource::collection($meals);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

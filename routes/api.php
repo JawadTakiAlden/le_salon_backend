@@ -32,6 +32,7 @@ Route::post('/logout' , [AuthenticationController::class , 'logout']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals' , [MealController::class , 'index']);
+    Route::get('/topMeals' , [MealController::class , 'topMeals']);
     Route::post('/meals' , [MealController::class , 'store']);
     Route::get('/meals/{meal}' , [MealController::class , 'show']);
     Route::post('/meals/{meal}' , [MealController::class , 'update']);
@@ -67,6 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/kitchen-orders' , [OrderController::class , 'kitchenOrders']);
     Route::get('/runner-orders' , [OrderController::class , 'runnerOrders']);
     Route::get('/casher-orders' , [OrderController::class , 'casherOrders']);
+    Route::get('/orders' , [OrderController::class , 'index']);
     Route::post('/orders' , [OrderController::class , 'store']);
     Route::get('/orders/{order}' , [OrderController::class , 'show']);
     Route::patch('/order-to-runner' , [OrderController::class , 'moveToRunner']);
