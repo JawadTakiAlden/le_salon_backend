@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Types\UserTypes;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,8 @@ class DatabaseSeeder extends Seeder
 
         User::create([
            'email' => 'admin@gmail.com',
-           'password' => 'admin123456'
+           'password' => 'admin123456',
+            'user_type' => UserTypes::ADMIN
         ]);
     }
 }

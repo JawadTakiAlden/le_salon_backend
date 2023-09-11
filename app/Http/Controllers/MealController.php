@@ -8,6 +8,8 @@ use App\Models\Meal;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
 use App\SecurityChecker\Checker;
+use App\Types\UserTypes;
+use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
@@ -24,7 +26,11 @@ class MealController extends Controller
         if ($this->isParamsFoundInRequest()){
             return $this->CheckerResponse();
         }
-        $meals = Meal::all();
+        if (Auth::user()->user_type == UserTypes::ADMIN){
+            $meals = Meal::all();
+            return MealResource::collection($meals);
+        }
+        $meals = Meal::where('visible' , true)->get();
         return MealResource::collection($meals);
     }
 
@@ -105,5 +111,19 @@ class MealController extends Controller
         }catch (\Throwable $th){
             return $this->error($meal , $th->getMessage() , 500);
         }
+    }
+
+    public function switchMeal (Meal $meal){
+        if ($this->isExtraFoundInBody([])){
+            return $this->ExtraResponse();
+        }
+        if ($this->isParamsFoundInRequest()){
+            return $this->CheckerResponse();
+        }
+        $meal->update([
+            'visible' => !$meal->visible
+        ]);
+
+        return MealResource::make($meal);
     }
 }

@@ -15,7 +15,7 @@ class Category extends Model
     public function setImageAttribute ($image)
     {
         $newImageName = uniqid() . '_' . 'image' . '.' . $image->extension();
-        $image->move(public_path('images/category') , $newImageName);
-        return $this->attributes['image'] ='/'.'images/category'.'/' . $newImageName;
+        $image->move(public_path('images_category') , $newImageName);
+        return $this->attributes['image'] ='/'.'images_category'.'/' . $newImageName;
     }
 }

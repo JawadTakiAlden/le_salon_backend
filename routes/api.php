@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals/{meal}' , [MealController::class , 'show']);
     Route::post('/meals/{meal}' , [MealController::class , 'update']);
     Route::delete('/meals/{meal}' , [MealController::class , 'destroy']);
+    Route::patch('/switch_meal/{meal}' , [MealController::class , 'switchMeal']);
 
 
     Route::get('/categories' , [CategoryController::class , 'index']);
