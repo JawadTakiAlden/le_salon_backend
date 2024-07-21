@@ -22,62 +22,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/login' , [AuthenticationController::class , 'login']);
+
+
+
+Route::get('/meals' , [MealController::class , 'index']);
+Route::get('/topMeals' , [MealController::class , 'topMeals']);
 Route::post('/logout' , [AuthenticationController::class , 'logout']);
+Route::get('/meals/{meal}' , [MealController::class , 'show']);
+Route::get('/categories' , [CategoryController::class , 'index']);
+Route::get('/categories/{category}' , [CategoryController::class , 'show']);
+Route::get('/floors' , [FloorController::class , 'index']);
+Route::get('/floors/{floor}' , [FloorController::class , 'show']);
+Route::get('/tables' , [TableController::class , 'index']);
+Route::get('/tables/{table}' , [TableController::class , 'show']);
+Route::get('/users' , [UserController::class , 'index']);
+Route::get('/users/{user}' , [UserController::class , 'show']);
+
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/meals' , [MealController::class , 'index']);
-    Route::get('/topMeals' , [MealController::class , 'topMeals']);
-    Route::post('/meals' , [MealController::class , 'store']);
-    Route::get('/meals/{meal}' , [MealController::class , 'show']);
+    Route::get('/statistics' , [StatisticsController::class , 'index']);
+    Route::get('/orders/{order}' , [OrderController::class , 'show']);
+    Route::get('/orders' , [OrderController::class , 'index']);
+    Route::post('/orders' , [OrderController::class , 'store']);
+    Route::patch('/order-to-runner/{order}' , [OrderController::class , 'moveToRunner']);
+    Route::patch('/order-to-casher/{order}' , [OrderController::class , 'moveToCasher']);
+    Route::delete('/orders/{order}' , [OrderController::class , 'destroy']);
+    Route::patch('/users/{user}' , [UserController::class , 'update']);
+    Route::delete('/users/{user}' , [UserController::class , 'destroy']);
+    Route::patch('/tables/{table}' , [TableController::class , 'update']);
+    Route::delete('/tables/{table}' , [TableController::class , 'destroy']);
+    Route::patch('/floors/{floor}' , [FloorController::class , 'update']);
+    Route::delete('/floors/{floor}' , [FloorController::class , 'destroy']);
     Route::post('/meals/{meal}' , [MealController::class , 'update']);
     Route::delete('/meals/{meal}' , [MealController::class , 'destroy']);
     Route::patch('/switch_meal/{meal}' , [MealController::class , 'switchMeal']);
-
-
-    Route::get('/categories' , [CategoryController::class , 'index']);
-    Route::post('/categories' , [CategoryController::class , 'store']);
-    Route::get('/categories/{category}' , [CategoryController::class , 'show']);
     Route::post('/categories/{category}' , [CategoryController::class , 'update']);
     Route::delete('/categories/{category}' , [CategoryController::class , 'destroy']);
-
-    Route::get('/floors' , [FloorController::class , 'index']);
-    Route::post('/floors' , [FloorController::class , 'store']);
-    Route::get('/floors/{floor}' , [FloorController::class , 'show']);
-    Route::patch('/floors/{floor}' , [FloorController::class , 'update']);
-    Route::delete('/floors/{floor}' , [FloorController::class , 'destroy']);
-
-    Route::get('/tables' , [TableController::class , 'index']);
     Route::post('/tables' , [TableController::class , 'store']);
-    Route::get('/tables/{table}' , [TableController::class , 'show']);
-    Route::patch('/tables/{table}' , [TableController::class , 'update']);
-    Route::delete('/tables/{table}' , [TableController::class , 'destroy']);
-    Route::delete('/tables/{table}' , [TableController::class , 'destroy']);
-
-
-    Route::get('/users' , [UserController::class , 'index']);
     Route::post('/users' , [UserController::class , 'store']);
-    Route::get('/users/{user}' , [UserController::class , 'show']);
-    Route::patch('/users/{user}' , [UserController::class , 'update']);
-    Route::delete('/users/{user}' , [UserController::class , 'destroy']);
-
+    Route::post('/meals' , [MealController::class , 'store']);
+    Route::post('/floors' , [FloorController::class , 'store']);
+    Route::post('/categories' , [CategoryController::class , 'store']);
     Route::get('/kitchen-orders' , [OrderController::class , 'kitchenOrders']);
     Route::get('/runner-orders' , [OrderController::class , 'runnerOrders']);
     Route::get('/casher-orders' , [OrderController::class , 'casherOrders']);
-    Route::get('/orders' , [OrderController::class , 'index']);
-    Route::post('/orders' , [OrderController::class , 'store']);
-    Route::get('/orders/{order}' , [OrderController::class , 'show']);
-    Route::patch('/order-to-runner' , [OrderController::class , 'moveToRunner']);
-    Route::patch('/order-to-casher' , [OrderController::class , 'moveToCasher']);
-    Route::delete('/orders/{order}' , [OrderController::class , 'destroy']);
-
-    Route::get('/statistics' , [StatisticsController::class , 'index']);
 });
-
-
 

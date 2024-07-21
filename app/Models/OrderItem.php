@@ -10,4 +10,8 @@ class OrderItem extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function meal(){
+        return $this->belongsTo(Meal::class);
+    }
 }

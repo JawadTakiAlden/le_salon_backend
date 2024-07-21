@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Http\Requests\MoveOrderToCasherRequest;
 use App\Http\Resources\OrderResource;
 use App\HttpResponse\CustomResponse;
@@ -9,13 +10,13 @@ use App\Models\Meal;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderItem;
 use App\Models\Table;
 use App\SecurityChecker\Checker;
 use App\Types\NotificationType;
 use App\Types\OrderStates;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class OrderController extends Controller
 {
@@ -32,6 +33,7 @@ class OrderController extends Controller
         if ($this->isParamsFoundInRequest()){
             return $this->CheckerResponse();
         }
+
         $orders = Order::all();
 
         return OrderResource::collection($orders);
@@ -149,7 +151,10 @@ class OrderController extends Controller
             'notification' => 'order number ' . $order->id . ' belongs to table number ' . $table->id . 'came to runner',
             'type' => NotificationType::TORUNNER,
             'order_id' => $order->id,
+            'order' => $order
         ]);
+
+        event(new NotificationEvent($notification));
 
         return $this->success($order , 'order updated successfully');
     }
@@ -172,6 +177,8 @@ class OrderController extends Controller
             'type' => NotificationType::TOCASHER,
             'order_id' => $order->id,
         ]);
+
+        event(new NotificationEvent($notification));
 
         return $this->success($order , 'order updated successfully');
     }

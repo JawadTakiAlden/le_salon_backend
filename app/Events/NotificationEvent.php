@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\OrderResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -39,7 +40,8 @@ class NotificationEvent implements ShouldBroadcast
 
     public function broadcastWith () {
         return [
-            'notification' => $this->notification
+            'notification' => $this->notification,
+            'order' => OrderResource::make()
         ];
     }
 }
